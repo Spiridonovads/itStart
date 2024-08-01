@@ -44,13 +44,6 @@ const DataTable = ({ data }: { data: any[] }) => {
         onPageChange={handlePageClick}
         containerClassName={style.pagination}
         activeClassName={style.active}
-        previousClassName={"page-item"}
-        nextClassName={"page-item"}
-        pageClassName={"page-item"}
-        previousLinkClassName={"page-link"}
-        nextLinkClassName={"page-link"}
-        pageLinkClassName={"page-link"}
-        breakLinkClassName={"page-link"}
       />
     </div>
   );

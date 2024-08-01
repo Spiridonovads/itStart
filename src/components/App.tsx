@@ -16,7 +16,7 @@ const App: React.FC = () => {
 
   return (
     <div className={style.wrapper}>
-      {data.length > 0 && <DataTable data={data} />}
+      {data.length > 0 ? <DataTable data={data} /> : <h1 className={style.loader}>Загрузка...</h1>}
     </div>
   );
 };
