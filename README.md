@@ -1,30 +1,29 @@
-# React + TypeScript + Vite
+./build.sh: скрипт для создания Docker образа на bash. Он содержит команды для сборки приложения, установки зависимостей и подготовки всего необходимого для запуска приложения в контейнере.
+./run.sh: скрипт для запуска Docker контейнера на основе ранее созданного Docker образа на bash. Он содержит команды для запуска контейнера, проброса портов и выполнения других необходимых настроек для запуска приложения.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Установить права на исполнение с помощью команды chmod:
+chmod +x build.sh
+chmod +x run.sh
 
-Currently, two official plugins are available:
+Код для чтения данных из таблицы находится в функции readExcelFile, которая асинхронно загружает и читает данные из Excel-файла по указанному URL, затем возвращает первые пять столбцов данных в формате JSON.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Загрузка данных:
+Функция принимает URL файла в качестве аргумента.
+С помощью fetch загружает файл по указанному URL.
+Преобразует загруженные данные в ArrayBuffer.
 
-## Expanding the ESLint configuration
+Чтение данных:
+Создает Uint8Array из ArrayBuffer.
+С помощью библиотеки XLSX читает данные из Uint8Array как книгу Excel (workbook).
+Получает первый лист книги (worksheet).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Ограничение количества столбцов:
+Получает диапазон данных листа и ограничивает его до первых 5 столбцов.
+Обновляет диапазон листа.
 
-- Configure the top-level `parserOptions` property like this:
+Преобразование данных в JSON:
+Преобразует данные листа в JSON-формат с помощью XLSX.utils.sheet_to_json.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Фильтрация данных:
+Для каждой строки данных сохраняет только первые 5 столбцов.
+Возвращает отфильтрованные данные в виде массива объектов.
